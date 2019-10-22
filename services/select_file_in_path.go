@@ -5,9 +5,9 @@ import (
 	"github.com/ktr0731/go-fuzzyfinder"
 	"github.com/mitchellh/go-homedir"
 	"io/ioutil"
-	"nort/bash"
-	"nort/config"
-	"nort/utils"
+	"norts/bash"
+	"norts/config"
+	"norts/utils"
 	"strings"
 )
 
@@ -36,7 +36,7 @@ func SelectFileInPath(path string) (string, error) {
 			if i == -1 {
 				return ""
 			}
-			relativeFilePath := configs.Nort.Path + strings.TrimPrefix(out[i], "./")
+			relativeFilePath := configs.Norts.Path + strings.TrimPrefix(out[i], "./")
 			fileFullPath := homeDirectory + "/" + strings.TrimPrefix(relativeFilePath, "~/")
 			data, err := ioutil.ReadFile(fileFullPath)
 			if err != nil {
@@ -49,7 +49,7 @@ func SelectFileInPath(path string) (string, error) {
 			return "", nil
 	} else {
 		relativePath := out[selected]
-		fullPath := configs.Nort.Path + strings.TrimPrefix(relativePath, "./")
+		fullPath := configs.Norts.Path + strings.TrimPrefix(relativePath, "./")
 		// return selected option
 		return fullPath, nil
 	}

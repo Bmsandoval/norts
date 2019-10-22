@@ -1,4 +1,4 @@
-module nort
+module norts
 
 go 1.12
 

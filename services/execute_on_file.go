@@ -1,7 +1,7 @@
 package services
 
 import (
-	"nort/utils"
+	"norts/utils"
 )
 
 func ExecuteOnFile(executable string, filePath string) error {

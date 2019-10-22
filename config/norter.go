@@ -1,6 +1,6 @@
 package config
 
-type NortConfig struct {
+type NortsConfig struct {
 	Path string `json:"path"`
 	Editor string `json:"editor"`
 }

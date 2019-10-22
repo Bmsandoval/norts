@@ -22,7 +22,7 @@ import (
   "github.com/mitchellh/go-homedir"
   "github.com/spf13/cobra"
   "github.com/ttacon/chalk"
-  "nort/config"
+  "norts/config"
   "os"
 )
 
@@ -32,7 +32,7 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-  Use:   "nort",
+  Use:   "norts",
   Short: "",
   Long: ``,
   Run: NortsMenu,
@@ -54,7 +54,7 @@ func init() {
   // Cobra supports persistent flags, which, if defined here,
   // will be global for your application.
 
-  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.nort.yaml)")
+  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.norts.yaml)")
 
 
   // Cobra also supports local flags, which will only run
@@ -74,7 +74,7 @@ func initConfig() {
       os.Exit(1)
     }
 
-    cfgFile = home + "/.nort.yaml"
+    cfgFile = home + "/.norts.yaml"
   }
 
   // If the config file doesn't exist, create it
@@ -143,7 +143,7 @@ func NortsMenu(_ *cobra.Command, _ []string) {
       break
     } else if char == 'F' || char == 'f' {
       fmt.Println("Find Note")
-      FindNorts(nil, []string{})
+      FindNote(nil, []string{})
     } else if char == 'A' || char == 'a' {
       fmt.Println("Add Note")
       fmt.Println(chalk.Red.String() + "Not Implemented" + chalk.Reset.String())

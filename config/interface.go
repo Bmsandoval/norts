@@ -9,7 +9,7 @@ import (
 )
 
 type Configurations struct {
-	Nort NortConfig
+	Norts NortsConfig
 }
 
 // initConfig reads in config file and ENV variables if set.

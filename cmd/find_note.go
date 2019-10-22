@@ -18,8 +18,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"nort/config"
-	"nort/services"
+	"norts/config"
+	"norts/services"
 )
 
 var nortsFindCmd = &cobra.Command{
@@ -33,12 +33,12 @@ var nortsFindCmd = &cobra.Command{
 func FindNote(_ *cobra.Command, _ []string) {
 	configs := config.GetConfigFromViper()
 
-	if configs.Nort.Path == "" {
+	if configs.Norts.Path == "" {
 		fmt.Println("whoops, path is empty")
 		return
 	}
 
-	filePath, err := services.SelectFileInPath(configs.Nort.Path)
+	filePath, err := services.SelectFileInPath(configs.Norts.Path)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -47,17 +47,17 @@ func FindNote(_ *cobra.Command, _ []string) {
 		return
 	}
 
-	if configs.Nort.Editor == "" {
-		fmt.Println("no editor configured. edit nort's config and add an editor")
+	if configs.Norts.Editor == "" {
+		fmt.Println("no editor configured. edit norts's config and add an editor")
 		return
 	}
 	// Check for necessary stuff
-	if ! services.ExecutableExists(configs.Nort.Editor) {
-		fmt.Printf("editor %q not installed", configs.Nort.Editor)
+	if ! services.ExecutableExists(configs.Norts.Editor) {
+		fmt.Printf("editor %q not installed", configs.Norts.Editor)
 		return
 	}
 
-	if err := services.ExecuteOnFile(configs.Nort.Editor, filePath); err != nil {
+	if err := services.ExecuteOnFile(configs.Norts.Editor, filePath); err != nil {
 		fmt.Println(err.Error())
 		return
 	}
