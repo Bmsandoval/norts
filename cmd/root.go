@@ -128,6 +128,7 @@ func NortsMenu(_ *cobra.Command, _ []string) {
   for {
     err := keyboard.Open()
     if err != nil {
+      keyboard.Close()
       panic(err)
     }
     char, key, err := keyboard.GetKey()
@@ -142,7 +143,6 @@ func NortsMenu(_ *cobra.Command, _ []string) {
       tm.Flush()
       break
     } else if char == 'F' || char == 'f' {
-      fmt.Println("Find Note")
       FindNote(nil, []string{})
     } else if char == 'A' || char == 'a' {
       fmt.Println("Add Note")
@@ -151,8 +151,7 @@ func NortsMenu(_ *cobra.Command, _ []string) {
       fmt.Println("Delete Note")
       fmt.Println(chalk.Red.String() + "Not Implemented" + chalk.Reset.String())
     } else if char == 'E' || char == 'e' {
-      fmt.Println("Edit Note")
-      fmt.Println(chalk.Red.String() + "Not Implemented" + chalk.Reset.String())
+      FindNote(nil, []string{})
     } else if char == 'Q' || char == 'q' {
       fmt.Println("Quitting...")
       tm.Clear()

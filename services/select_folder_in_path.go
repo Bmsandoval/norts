@@ -3,13 +3,14 @@ package services
 import (
 	"errors"
 	"github.com/ktr0731/go-fuzzyfinder"
-	"io/ioutil"
 	"norts/bash"
 	"norts/utils"
+	"path/filepath"
+	"strings"
 )
 
-func SelectFileInPath(path string) (string, error) {
-	err, out, errout := utils.ExecGetOutputArray(bash.ListFilesInPath(path))
+func SelectFolderInPath(path string) (string, error) {
+	err, out, errout := utils.ExecGetOutputArray(bash.ListFoldersInPath(path))
 	if err != nil {
 		return "", err
 	}
@@ -26,26 +27,32 @@ func SelectFileInPath(path string) (string, error) {
 		func(i int) string {
 			return out[i]
 		}, fuzzyfinder.WithPreviewWindow(func(i, w, h int) string {
-			if i == -1 { return "" }
+			if i == -1 {
+				return ""
+			}
 
 			// Given a relative path, get full path
 			fileFullPath, err := utils.FullPathToFile(out[i])
 			if err != nil { return "" }
 
-			// Read contents of file
-			data, err := ioutil.ReadFile(fileFullPath)
+			// Get contents of folder
+			folderContents, err := filepath.Glob(fileFullPath + "/*")
 			if err != nil { return "" }
 
-			return string(data)
+			for key, folderPath := range folderContents {
+				folderContents[key] = strings.TrimPrefix(folderPath, fileFullPath)
+			}
+
+			return strings.Join(folderContents[:], "\n")
 		}));
 	err != nil {
 		// nothing selected, nothing to return
 			return "", nil
 	} else {
 		// Given a relative path, get full path
-		fileFullPath, err := utils.FullPathToFile(out[selected])
+		folderFullPath, err := utils.FullPathToFile(out[selected])
 		if err != nil { return "", err }
 		// return selected option
-		return fileFullPath, nil
+		return folderFullPath, nil
 	}
 }
