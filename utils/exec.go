@@ -38,3 +38,16 @@ func Exec(command string) error {
 
 	return nil
 }
+
+// required for things like ssh, kubectl-exec, and vim
+func ExecNotCapturingOutput(command string, args []string) error {
+	c := exec.Command(command, args...)
+	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
+	c.Stdin = os.Stdin
+	err := c.Run()
+	if err != nil {
+		return err
+	}
+	return nil
+}

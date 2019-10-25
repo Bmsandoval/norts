@@ -8,6 +8,7 @@ import (
 	"norts/bash"
 	"norts/config"
 	"norts/utils"
+	"os"
 	"strings"
 )
 
@@ -50,7 +51,12 @@ func SelectFileInPath(path string) (string, error) {
 	} else {
 		relativePath := out[selected]
 		fullPath := configs.Norts.Path + strings.TrimPrefix(relativePath, "./")
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return "", err
+		}
+		fullyQualifiedPath := homeDir + "/" + strings.TrimPrefix(fullPath, "~/")
 		// return selected option
-		return fullPath, nil
+		return fullyQualifiedPath, nil
 	}
 }
