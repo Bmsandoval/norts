@@ -11,5 +11,5 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/ttacon/chalk v0.0.0-20160626202418-22c06c80ed31
 	golang.org/x/sys v0.0.0-20190813064441-fde4db37ae7a // indirect
-	gopkg.in/yaml.v2 v2.2.2
+	gopkg.in/yaml.v2 v2.2.8
 )
